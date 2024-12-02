@@ -1,0 +1,135 @@
+<html><head><base href="/" />
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .container {
+    text-align: center;
+    padding: 2rem;
+    border: 2px solid #0f0;
+    border-radius: 10px;
+    animation: glowPulse 2s infinite;
+    position: relative;
+    background: rgba(0,0,0,0.8);
+  }
+
+  @keyframes glowPulse {
+    0% { box-shadow: 0 0 5px #0f0; }
+    50% { box-shadow: 0 0 20px #0f0, 0 0 30px #0f0; }
+    100% { box-shadow: 0 0 5px #0f0; }
+  }
+
+  .matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+
+  .message {
+    margin: 1em 0;
+  }
+
+  .blink {
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .hacker-icon {
+    width: 100px;
+    height: 100px;
+    margin: 1em auto;
+  }
+</style>
+</head>
+<body>
+
+<canvas class="matrix-bg" id="matrix"></canvas>
+
+<div class="container">
+  <svg class="hacker-icon" viewBox="0 0 100 100">
+    <circle cx="50" cy="35" r="20" fill="none" stroke="#0f0" stroke-width="2"/>
+    <path d="M30 70 Q50 90 70 70" fill="none" stroke="#0f0" stroke-width="2"/>
+    <circle cx="40" cy="30" r="3" fill="#0f0"/>
+    <circle cx="60" cy="30" r="3" fill="#0f0"/>
+  </svg>
+
+  <h1>HACKED SUCCESSFULLY! 🎯<br>PIRATAGE RÉUSSI! 🎯</h1>
+  
+  <div class="message">
+    <p>Thank you for providing your credentials!<br>
+    Merci d'avoir fourni vos identifiants!</p>
+    
+    <p>Your system is now part of our network<br>
+    Votre système fait maintenant partie de notre réseau</p>
+    
+    <p class="blink">[ System compromised | Système compromis ]</p>
+  </div>
+</div>
+
+<script>
+// Matrix rain effect
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+const fontSize = 14;
+const columns = canvas.width/fontSize;
+const drops = [];
+
+for(let x = 0; x < columns; x++) {
+    drops[x] = 1;
+}
+
+function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = '#0f0';
+    ctx.font = fontSize + 'px monospace';
+
+    for(let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+        
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
+        
+        drops[i]++;
+    }
+}
+
+setInterval(draw, 33);
+
+// Resize handler
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
