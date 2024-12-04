@@ -1,0 +1,141 @@
+{% load static %}
+<html><head><base href="." />
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .avatar-container {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .decoration {
+            position: absolute;
+            pointer-events: none;
+            animation: explode 3s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .snowfall {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="snowfall" id="snowfall"></div>
+    <div class="container">
+        <div class="avatar-container">
+            <img src="{% static 'chris.jpg' %}" alt="merry-christmas" class="avatar">
+
+        </div>
+    </div>
+
+    <script>
+        function createDecorations() {
+            const decorations = ['🎄', '🎅', '🎁', '⭐', '🔔', '❄️', '🎉', '🦌'];
+            const container = document.body;
+            
+            function createDecoration() {
+                const decoration = document.createElement('div');
+                decoration.className = 'decoration';
+                decoration.textContent = decorations[Math.floor(Math.random() * decorations.length)];
+                decoration.style.left = Math.random() * 100 + 'vw';
+                decoration.style.top = Math.random() * 100 + 'vh';
+                decoration.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                container.appendChild(decoration);
+
+                decoration.addEventListener('animationend', () => {
+                    container.removeChild(decoration);
+                    createDecoration();
+                });
+            }
+
+            for(let i = 0; i < 50; i++) {
+                createDecoration();
+            }
+        }
+
+        function createSnowfall() {
+            const snowfall = document.getElementById('snowfall');
+            const numberOfSnowflakes = 100;
+
+            for(let i = 0; i < numberOfSnowflakes; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.style.position = 'absolute';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.top = -10 + 'px';
+                snowflake.style.width = '5px';
+                snowflake.style.height = '5px';
+                snowflake.style.borderRadius = '50%';
+                snowflake.style.background = 'white';
+                snowflake.style.opacity = Math.random();
+                snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear infinite`;
+                snowfall.appendChild(snowflake);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        createDecorations();
+        createSnowfall();
+    </script>
+</body></html>
