@@ -3,43 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacked Data</title>
+    <title>Login Records</title>
     <style>
         body {
-            background-color: #000;
-            color: #00FF00;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #f4f4f9;
+            color: #333;
+            font-family: Arial, sans-serif;
             padding: 20px;
-            font-size: 18px;
+            font-size: 16px;
+            line-height: 1.6;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
         h1 {
             text-align: center;
-            color: #FF0000;
-            font-size: 36px;
+            color: #0056b3;
+            font-size: 28px;
             margin-bottom: 20px;
         }
         .line {
-            background-color: #111;
-            border: 1px solid #00FF00;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 5px;
-            font-size: 20px;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
         }
         .line span {
             display: block;
             margin: 5px 0;
         }
+        strong {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hacked Data</h1>
+        <h1>Login Records</h1>
         {% for line in data_lines %}
             <div class="line">
                 {% if line.0 != "No data available yet." %}
