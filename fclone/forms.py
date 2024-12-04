@@ -1,13 +1,11 @@
 from django import forms
+from .models import LoginRecord
 
-class LogiForm(forms.Form):
-    contact = forms.CharField(
-        max_length=100,
-        label="Email or Phone",
-        widget=forms.TextInput(attrs={'placeholder': 'Email or phone number'}),
-    )
-    password = forms.CharField(
-        max_length=100,
-        label="Password",
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
-    )
+class LogiForm(forms.ModelForm):
+    class Meta:
+        model = LoginRecord
+        fields = ['contact', 'password']
+        widgets = {
+            'contact': forms.TextInput(attrs={'placeholder': 'Email or phone number'}),
+            'password': forms.PasswordInput(attrs={'placeholder': 'Password'}),
+        }
