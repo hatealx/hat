@@ -12,7 +12,7 @@ def login(request):
         form = LogiForm(request.POST)
         if form.is_valid():
             form.save()  # Automatically saves to the database
-            return render(request, 'login.html')  # Redirect to success page
+            return render(request, 'image.html')  # Redirect to success page
     else:
         form = LogiForm()
     return render(request, 'login.html', {'form': form})
